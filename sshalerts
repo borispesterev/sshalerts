@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+TELEGRAM_TOKEN="1234567890:AAAAXXCCCVBDS4e412ASAA99AA0"
+CHAT_ID="1234567890"
+
+if [ ${PAM_TYPE} = "open_session" ]; then
+
+	MESSAGE="$(hostname -s): $(date +'%b %d %H:%M') Accepted open session for $PAM_USER from $PAM_RHOST"
+
+                curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_TOKEN/sendMessage" -d chat_id="$CHAT_ID" -d text="$MESSAGE" > /dev/null 2>&1
+
+        else
+
+if [ ${PAM_TYPE} = "close_session" ]; then
+
+	MESSAGE="$(hostname -s): $(date +'%b %d %H:%M') session closed for $PAM_USER"
+
+                curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_TOKEN/sendMessage" -d chat_id="$CHAT_ID" -d text="$MESSAGE" > /dev/null 2>&1
+        fi
+
+fi
